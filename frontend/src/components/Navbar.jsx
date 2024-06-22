@@ -10,7 +10,6 @@ const Navbar = () => {
     if (currentUser?.data?.user.role === 'Candidate') {
       return (
         <>
-          <Link to="/candidate/dashboard" className="nav-link">Home</Link>
           <Link to="/candidate/dashboard/profile" className="nav-link">Profile</Link>
           <Link to="/candidate/dashboard/appling-job" className="nav-link">Applications</Link>
           <Link to="/candidate/dashboard/job-status" className="nav-link">Job Status</Link>
@@ -37,7 +36,7 @@ const Navbar = () => {
         <>
           {/* <Link to="/recruiter/dashboard/home" className="nav-link">Home</Link> */}
           <Link to="/recruiter/dashboard/profile" className="nav-link">Profile</Link>
-          <Link to="/recruiter/dashboard/get-applied-job" className="nav-link">View Applications (get aapliedjob)</Link>
+          <Link to="/recruiter/dashboard/get-applied-job" className="nav-link">View Applications</Link>
         </>
       );
     } else {

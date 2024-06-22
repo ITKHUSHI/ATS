@@ -38,7 +38,7 @@ function GetAppliedJob() {
 
   return (
     <div>
-      <h2>Applied Jobs</h2>
+      <h2 className='text-center font-bold text-2xl'> Candidate Applied Jobs</h2>
       
       <ul>
         {dashboardData.map((application) => (
