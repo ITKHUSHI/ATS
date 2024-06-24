@@ -20,4 +20,5 @@ router.route("/logout").post(verifyJWT,logoutUser);
 router.route("/get-current-user").get(getCurrentUser);
 router.route("/update-candidate-details").patch( verifyJWT, upload.single('resume'),updateCandidateProfile);
 
+
 export default router;    

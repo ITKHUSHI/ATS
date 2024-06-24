@@ -25,6 +25,7 @@ import CoordinatorLayout from './Layout/CoordinatorLayout.jsx';
 import EmployerLayout from './Layout/EmployerLayout.jsx';
 import CandidateLayout from './Layout/CandidateLayout.jsx';
 import CandidateApplingJob from './components/CandidateApplingJob.jsx';
+import CoordinatorDashboard from './pages/CoordinatorDashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         children: [
+          {path:'home',element:<CoordinatorDashboard/>},
           { path: 'assigned-recruiter', element: <AssignedRecruiter /> },
           { path: 'get-applied-job', element: <GetAppliedJob /> },
         ],

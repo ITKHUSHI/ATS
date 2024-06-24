@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ShortlistForm from './ShortlistForm';
 
 const RecruiterForm = () => {
   const [responses, setResponses] = useState({

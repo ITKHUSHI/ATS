@@ -79,7 +79,7 @@ const jobId=currentJob._id;
               </div>
             ))
           ) : (
-            <p>Loading...</p>
+            <p className='text-red-500 text-xl'>Do not have any job yet</p>
           )}
         </ul>
       </div>

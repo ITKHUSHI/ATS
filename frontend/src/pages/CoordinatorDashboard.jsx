@@ -1,7 +1,9 @@
 import React ,{useEffect} from 'react'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import AppliedJob from '../components/CandidateApplingJob';
+import ShortlistedCandidates from '../components/ShortlistedCandidate';
+import CandidateApplingJob from '../components/CandidateApplingJob';
+import JobApplications from '../components/JobApplications';
 
 
 
@@ -9,13 +11,19 @@ function CoordinatorDashboard() {
 	const { currentUser } = useSelector(state => state.user);
 console.log("currentUser" , currentUser)
 	useEffect(() => {
-		axios.get('/api/v1/coordinator/dashboard')
-		  .then(response => {
+		try{
+		const response= axios.get('/api/users/v1/coordinator/dashboard',{
+			headers: {
+				Authorization: `Bearer ${currentUser?.data?.refreshToken}`,
+			  }
+	  
+		})
+		  
 			setDashboardData(response.data);
-		  })
-		  .catch(error => {
+		  }
+		  catch(error) {
 			console.error('Error fetching coordinator dashboard:', error);
-		  });
+		  };
 	  }, []);
   return (
 	<>
@@ -25,7 +33,7 @@ console.log("currentUser" , currentUser)
       {/* Add coordinator-specific content and actions */}
     </div>
 
-	<AppliedJob/>
+	<JobApplications/>
 	</>
   )
 }

@@ -5,9 +5,10 @@ import {createJobPost,
 	    updateApplicationStatus,
 		getAllJobPost,
 		applyForJob,
-		getJobApplications,
+		getAppliedJobApplications,
 		assignRecruitersAndR2Form ,
-		shortlistCandidate
+		shortlistCandidate,
+		getShortlistedCandidates
 	
 } from "../controller/job.controller.js"
 import { upload } from "../utills/cloudinary.js";
@@ -18,9 +19,9 @@ router.route('/create-job-post').post( createJobPost);
 router.route('/update-application-status').patch(verifyJWT,updateApplicationStatus);
 router.route('/get-job-post/:id').get(verifyJWT,getAllJobPost);
 router.route('/apply-for-job').post(verifyJWT,upload.single('resume'),applyForJob);
-router.route('/get-job-applications/:jobId').get(verifyJWT,getJobApplications);
+router.route('/get-job-applications/:jobId').get(verifyJWT,getAppliedJobApplications);
 router.route('/assign-recruiter-form').post( verifyJWT,assignRecruitersAndR2Form );
 router.route('/shortlist-candidate').post(verifyJWT,shortlistCandidate)
- 
+router.route('/shortlisted/:jobId').get( verifyJWT, getShortlistedCandidates); 
 
-export default router
+export default router 

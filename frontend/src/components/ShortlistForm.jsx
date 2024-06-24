@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import {useNavigate} from 'react-router-dom'
 
-const ShortlistForm = (candidateId,jobId) => {
+const ShortlistForm = ({candidateId,jobId}) => {
   const [message, setMessage] = useState('');
   const currentUser = useSelector((state) => state.user);
-  const  currentJob  = useSelector((state) => state.jobs);
-
+const navigate=useNavigate()
 //  console.log("current",currentJob.application._id)
 
   const handleSubmit = async (event) => {
@@ -26,6 +26,7 @@ const ShortlistForm = (candidateId,jobId) => {
           Authorization: `Bearer ${currentUser?.data?.refreshToken}`,
         }
       });
+      navigate('/recruiter/dashboard/get-applied-job')
       toast.success("successfully send message")
       // console.log(response.data);
     } catch (error) {

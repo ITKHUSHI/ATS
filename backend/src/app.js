@@ -24,20 +24,20 @@ app.use('/api/v1/jobs',jobRouter);
 
 
 
-// app.get('/api/v1/coordinator/dashboard',verifyJWT, roleMiddleware(['Coordinator']), (req, res) => {
-// 	res.send('Coordinator Dashboard');
-//   });
-//   app.get('/api/v1/recruiter/dashboard',verifyJWT, (req, res) => {
-// 	res.send('Recruiter Dashboard');})
+app.get('/api/v1/coordinator/dashboard'), (req, res) => {
+	res.send('Coordinator Dashboard');
+  }
+  app.get('/api/v1/recruiter/dashboard',verifyJWT, (req, res) => {
+	res.send('Recruiter Dashboard');})
 	
-// 	app.get('/api/v1/employer/dashboard', verifyJWT,roleMiddleware(['Employer']), (req, res) => {
-// 		res.send('Employer Dashboard');
-// 	  });
+	app.get('/api/v1/employer/dashboard', verifyJWT,roleMiddleware(['Employer']), (req, res) => {
+		res.send('Employer Dashboard');
+	  });
 	  
-// 	  app.get('/api/v1/users/candidate/dashboard',verifyJWT, (req, res) => {
-// 		const candidateDetails=updateCandidateProfile(id, fullname, email, contact, skills, certificates, resume, workExperience, education );
-// 		res.send(candidateDetails);
-// 	  });
+	  app.get('/api/v1/users/candidate/dashboard',verifyJWT, (req, res) => {
+		const candidateDetails=updateCandidateProfile(id, fullname, email, contact, skills, certificates, resume, workExperience, education );
+		res.send(candidateDetails);
+	  });
 
 
 

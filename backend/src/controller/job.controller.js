@@ -4,7 +4,6 @@ import { ApiError } from "../utills/ApiError.js";
 import { ApiResponse } from "../utills/ApiResponse.js";
 import mongoose from "mongoose";
 
-
   const createJobPost = asyncHandler (async(req,res) =>{
 	// req-body
 	// check data fetch or not
@@ -93,11 +92,11 @@ const updateApplicationStatus= asyncHandler(async(req,res)=>{
 		   .json(new ApiResponse(200,job,"Applicatio status updated successfully"));
 })
 
-const getJobApplications=asyncHandler(async(req,res)=>{
+const getAppliedJobApplications=asyncHandler(async(req,res)=>{
 	const { jobId } = req.params;
 	const job = await Job.findById(jobId).populate({
 	  path: 'applications.candidate',
-	  select: 'fullname email contact skills certificates resume workExperience education'
+	  select: 'fullname email contact skills certificates resume workExperience education candidateId'
 	});
   
 	if (!job) {
@@ -136,40 +135,59 @@ const assignRecruitersAndR2Form = asyncHandler(async (req, res) => {
 
 
 
+ 
 const shortlistCandidate = asyncHandler(async (req, res) => {
   const { jobId, candidateId, message } = req.body;
+  console.log("Incoming Data:", { jobId, candidateId, message });
 
   if (!jobId || !candidateId || !message) {
     return res.status(400).json({ message: "JobID, CandidateID, and message are required" });
   }
 
   if (!mongoose.Types.ObjectId.isValid(jobId) || !mongoose.Types.ObjectId.isValid(candidateId)) {
-   console.log(jobId,candidateId)
-    throw new ApiError(400,{ message: "Invalid JobID or CandidateID" });
+    console.error("Invalid ObjectId(s):", { jobId, candidateId });
+    return res.status(400).json({ message: "Invalid JobID or CandidateID" });
   }
 
   const job = await Job.findById(jobId);
   if (!job) {
+    console.error("Job not found:", jobId);
     return res.status(404).json({ message: "Job not found" });
   }
 
+  console.log("Job Found:", job);
+
   const application = job.applications.find(app => app._id.toString() === candidateId);
   if (!application) {
+    console.error("Application not found:", candidateId);
     return res.status(404).json({ message: "Application not found" });
   }
 
-  job.shortlistedCandidates.push({ candidateId: mongoose.Types.ObjectId(candidateId), message });
+  console.log("Application Found:", application);
+
+ job.shortlistedCandidates.push({ candidateId: new mongoose.Types.ObjectId(candidateId),jobId, message });
+  console.log("Shortlisted Candidates:", job.shortlistedCandidates);
 
   await job.save();
 
   return res.status(200).json({ message: "Candidate shortlisted and message sent successfully" });
 });
 
-
-
-
-
-
+	const getShortlistedCandidates = asyncHandler(async (req, res) => {
+		const { jobId } = req.params;
+	  
+		if (!mongoose.Types.ObjectId.isValid(jobId)) {
+		  return res.status(400).json({ message: "Invalid JobID" });
+		}
+	  
+		const job = await Job.findById(jobId).populate('shortlistedCandidates.candidateId');
+		if (!job) {
+		  return res.status(404).json({ message: "Job not found" });
+		}
+	  
+		return res.status(200).json({ shortlistedCandidates: job.shortlistedCandidates });
+	  });
+	  
 
 
 
@@ -178,7 +196,8 @@ export{
 	applyForJob,
 	getAllJobPost,
 	updateApplicationStatus,
-	getJobApplications,
+	getAppliedJobApplications,
 	assignRecruitersAndR2Form ,
 	shortlistCandidate,
+	getShortlistedCandidates
 }

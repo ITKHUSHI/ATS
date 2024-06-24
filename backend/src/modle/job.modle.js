@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const jobSchema =new mongoose.Schema({
+	
 	recruiterId:{
 		type:mongoose.Schema.ObjectId,
 		ref:'User',
@@ -22,7 +23,7 @@ const jobSchema =new mongoose.Schema({
 		type:String,
 		required:true,
 	},
-	responsiblities:{
+	responsibilities:{
 		type:String,
 		reqired:true,
 	},
@@ -48,7 +49,10 @@ const jobSchema =new mongoose.Schema({
 		candidateId: { 
 			type: mongoose.Schema.ObjectId,
 			ref: 'User' },
-		message: String
+			jobId:String,
+		message: String,
+		
+		
 	  }],
 
 	applications:[

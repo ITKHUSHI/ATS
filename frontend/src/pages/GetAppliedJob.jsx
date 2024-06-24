@@ -14,8 +14,8 @@ function GetAppliedJob() {
   const [shortlistCandidateId, setShortlistCandidateId] = useState(null);
 
   const jobId = currentJob?._id;
-  console.log(currentJob.shortlistedCandidates.candidateId);
-
+  // console.log(currentJob.shortlistedCandidates.candidateId);
+  // console.log(dashboardData)
   useEffect(() => {
     async function fetchJobApplications() {
       try {
@@ -24,8 +24,8 @@ function GetAppliedJob() {
             Authorization: `Bearer ${currentUser?.token}`
           }
         });
-        // console.log(response.data.data.applications);
-        setDashboardData(response?.data?.data?.applications);
+        console.log(response.data.data);
+        setDashboardData(response?.data?.data.applications);
       } catch (error) {
         console.error("Error fetching job applications", error);
       }
@@ -37,12 +37,15 @@ function GetAppliedJob() {
   }, [currentUser, currentJob]);
 
   return (
-    <div>
+    <div className=' text-black '>
       <h2 className='text-center font-bold text-2xl'> Candidate Applied Jobs</h2>
       
       <ul>
-        {dashboardData.map((application) => (
-          <li key={application._id} className="p-4 border-b">
+        { Array.isArray(dashboardData) &&  dashboardData.map((application) => (
+         <div >
+                    {console.log(dashboardData.companyName)}
+
+           <li key={application._id} className="p-4 border-b">
             <h3 className="text-lg font-bold">Post Name: {currentJob.postName}</h3>
             <p>Company: {currentJob.companyName}</p>
             <p>Location: {currentJob.location}</p>
@@ -63,17 +66,18 @@ function GetAppliedJob() {
             <button className="text-blue-500 hover:underline" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? 'Show more' : 'Show less'}
             </button>
-            <button onClick={() => setIsReview(true)}>
+            <button onClick={() => setIsReview(true)} className='m-2'>
               Review
             </button>
             {isReview && <RecruiterForm />}
-            <button onClick={() => setShortlistCandidateId(application._id)}>
+            <button onClick={() => setShortlistCandidateId(application._id)} className='m-4'>
               Shortlist
             </button>
             {shortlistCandidateId === application._id && (
               <ShortlistForm jobId={jobId} candidateId={application._id} />
             )}
           </li>
+         </div>
         ))}
       </ul>
     </div>

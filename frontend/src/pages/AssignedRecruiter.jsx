@@ -1,10 +1,12 @@
-import React from 'react'
-import RecruiterForm from '../components/RecruiterForm'
+import React  from 'react'
+import ShortlistedCandidates from '../components/ShortlistedCandidate'
 
 function AssignedRecruiter() {
+
+
   return (
     <>
-       <RecruiterForm/>
+<ShortlistedCandidates/>
 
     </>
   )

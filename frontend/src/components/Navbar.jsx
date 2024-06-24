@@ -26,7 +26,7 @@ const Navbar = () => {
     } else if (currentUser?.data?.user.role === 'Coordinator') {
       return (
         <>
-          <Link to="/coordinator/dashboard" className="nav-link">Dashboard</Link>
+          <Link to="/coordinator/dashboard/home" className="nav-link">Dashboard</Link>
           <Link to="/coordinator/dashboard/assigned-recruiter" className="nav-link">Assign Recruiters</Link>
           <Link to="/coordinator/dashboard/get-applied-job" className="nav-link">View Applications</Link>
         </>
@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <nav className="bg-red-500 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-xl font-bold">ATS Application</Link>
+        <h1 className='text-xl font-bold'>ATS Application</h1>
         <div className="flex space-x-4">
           {renderLinks()}
         </div>
